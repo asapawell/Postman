@@ -12,7 +12,7 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"//установка токена",
+							"//установка токена, он берется из тела ответа и вставлем значение в окружение",
 							"let jData = JSON.parse(responseBody);",
 							"pm.environment.set(\"token\",jData.token);"
 						],
