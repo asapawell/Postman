@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "2c11e315-b13d-465f-b211-ea6cefa4b7f2",
+		"name": "First",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get_test1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/get_method?name=Pavel&age=29",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"get_method"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Pavel"
+						},
+						{
+							"key": "age",
+							"value": "29"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//данный скрипт распарсит(прочитает) наш JSON запрос, по ключу token, вытянет значение и засунет его в окружение в переменную токен, который мы создали заранее",
+							"//создаем переменную JD, далее вызываем метод JSON, далее в этом объекте есть метод parse (которому задаем responseBody)",
+							"let jD = JSON.parse(responseBody);",
+							"//методу pm создаем сначала метод enviroment, после метод set(кладет значения в пересенную окружения) задает входные параметры (наша переменная token и jD, которая может забрать ключ ) то есть из JSON забери токен",
+							"pm.environment.set(\"token\",jD.token);",
+							"//всегда когда будем отправлять метод login, токен будет перепрописываться, для этого мы и оставили в начале графу token пустой, т.к он всегда формируется динамически"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "Pavel",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "1.Создаем нового пользователя на сервере через метод POST. \n2.Вставляем переменнуюю url, затем через / прописываем энд поинт login. \n3.Во вкладке body пишем два ключ значения, которые прописаны в коде для этого энд поинта.\n4.Отправляем запрос и получаем ответ, в котором находится наш токен. \n5.После этого создаем в окружении новую переменную token, значения оставить пустыми. \n6.Далее делаем тест, смотри вкладку tests"
+			},
+			"response": []
+		},
+		{
+			"name": "new_data",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//проверка есть ли такая перменная. ",
+							"pm.test(\"Your test name\", function() ",
+							"{",
+							"//парсим(читаем) JSON",
+							"let jD = pm.response.json();",
+							"//сравниваем имя. Постман (pm) ожидает, что в перменной jD(она же наша JSON), в нащем response лежит ключ name, мы его берем и сравниваем с именем в данном случае \"Pavel\"",
+							"pm.expect(jD.name).to.eql(\"Pavel\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "auth_token",
+							"value": "{{token}}",
+							"type": "text"
+						},
+						{
+							"key": "age",
+							"value": "29",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "3000",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "Pavel",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/new_data",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"new_data"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get_test2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{regres_env}}api/users/2",
+					"host": [
+						"{{regres_env}}api"
+					],
+					"path": [
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "regres_env",
+			"value": "https://reqres.in/"
+		}
+	]
+}
