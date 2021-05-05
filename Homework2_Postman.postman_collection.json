@@ -1,0 +1,115 @@
+{
+	"info": {
+		"_postman_id": "bd216333-b609-4b7d-b450-0d80defa068e",
+		"name": "Homework2_Postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//установка токена",
+							"let jData = JSON.parse(responseBody);",
+							"pm.environment.set(\"token\",jData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "login",
+							"value": "asap",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/login",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User_Info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//статус код 200",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"//проверка структуры JSON",
+							"pm.test(\"The Response has all properties\", function () ",
+							"{",
+							"    let jsonData = pm.response.json();",
+							"    ",
+							"    pm.expect(jsonData).to.be.an('Object');",
+							"    //чтобы сравнить ключ в ответе с изначальным ответом, нужно провалиться в person.value, т.к person находится выше",
+							"    pm.expect(jsonData.person.u_age).to.eql(22).to.be.a(\"number\");",
+							"    //в ответе ключ u_name включает в себя массив из 3 элементов, обращаемся к каждому по индексу",
+							"    pm.expect(jsonData.person.u_name).to.eql([null,200,22]).to.be.an('array');",
+							"    pm.expect(jsonData.person.u_name[0]).to.eql(null).to.be.a('null');",
+							"    pm.expect(jsonData.person.u_name[1]).to.eql(200).to.be.a('number');",
+							"    pm.expect(jsonData.person.u_name[2]).to.eql(22).to.be.a('number');",
+							"    pm.expect(jsonData.person.u_salary_1_5_year).to.eql(800).to.be.a('number');",
+							"    pm.expect(jsonData.qa_salary_after_12_months).to.eql(580).to.be.a('number');",
+							"    pm.expect(jsonData.qa_salary_after_6_months).to.eql(400).to.be.a('number');",
+							"    pm.expect(jsonData.start_qa_salary).to.eql(200).to.be.a('number');",
+							"    ",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"age\":22,\n    \"salary\":200,\n    \"name\":\"Pavel\",\n    \"auth_token\":\"{{token}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/user_info",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
