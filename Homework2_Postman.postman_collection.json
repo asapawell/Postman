@@ -440,6 +440,18 @@
 					"listen": "test",
 					"script": {
 						"exec": [
+							"pm.test(\"Verification of status code\",function()",
+							"{",
+							"if (pm.response.to.have.status(500))",
+							"{",
+							"postman.setNextRequest(\"Currency\");",
+							"}",
+							"else",
+							"{",
+							"pm.response.to.have.status(200);",
+							"}",
+							"})",
+							"",
 							"//1.статус код 200",
 							"pm.test(\"Status code is 200\",function()",
 							"{",
@@ -456,7 +468,8 @@
 							"pm.expect(jsonData.Cur_OfficialRate).to.be.a('number');",
 							"pm.expect(jsonData.Cur_Scale).to.be.a('number');",
 							"pm.expect(jsonData.Date).to.be.a('string');",
-							"})"
+							"})",
+							""
 						],
 						"type": "text/javascript"
 					}
