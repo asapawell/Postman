@@ -535,29 +535,7 @@
 							"let jsonData = pm.response.json();",
 							"let randomObject = jsonData[Math.floor(Math.random() * jsonData.length)];",
 							"console.log(randomObject);",
-							"pm.environment.set('Cur_ID',randomObject.Cur_ID);",
 							"",
-							"const curIDs = [];",
-							"for (let i = 0; i < jsonData.length; i++){",
-							"    curIDs.push(jsonData[i].Cur_ID);   ",
-							"",
-							"const options = {",
-							"       'method': 'POST',",
-							"       'url': 'http://116.203.27.46:5002/curr_byn',",
-							"       'body': {",
-							"           'mode': 'formdata',",
-							"           'formdata': [",
-							"               {'key': 'auth_token','value': '{{token}}'},",
-							"               {'key': 'curr_code','value': '{{curIDs}}'}",
-							"           ]",
-							"       }",
-							"}",
-							"pm.sendRequest(options,(error,response) =>{",
-							"    if (error) throw new Error(error);",
-							"    console.log(response.json());",
-							"})",
-							"}",
-							"pm.environment.set('curIDs',curIDs);",
 							"// for(let i = 0; i < jsonData.length; i++)",
 							"// {",
 							"//    let arr_cur_id = jsonData[i].Cur_ID;",
@@ -715,55 +693,33 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"// pm.test(\"Sending requests\", function()",
-							"// {",
-							"// let jsonData = pm.response.json();",
-							"// let num = 0;",
-							"// for(let i = 0; i < jsonData.length; i++)",
-							"// {",
-							"//     let arr = jsonData[i].Cur_ID;",
-							"    //m.sendRequest('Curr_byn');",
-							"    // if(pm.response.to.have.status(500))",
-							"    // {",
-							"    //     num++;",
-							"    // }",
-							"    // else",
-							"    // {",
-							"    //     console.log(jsonData.Cur_OfficialRate);",
-							"    // }",
-							"// }",
-							"// })",
+							"pm.test('Test request', function() {",
+							"let jsonData = pm.response.json();",
+							"let schet = 0;",
+							"for (let i = 0; i < jsonData.length; i++){",
+							"        pm.environment.set('curr_code', jsonData[i].Cur_ID)",
 							"",
-							""
-						],
-						"type": "text/javascript"
-					}
-				},
-				{
-					"listen": "prerequest",
-					"script": {
-						"exec": [
-							"// pm.sendRequest( {",
-							"//     url: 'http://116.203.27.46:5002/curr_byn',",
-							"//     method: 'POST',",
-							"//     header: ",
-							"//     {",
-							"//         'Content-Type': 'multipart/form-data',",
-							"        ",
-							"//     },",
-							"//     body: {",
-							"//         mode: 'formdata',",
-							"//         formdata: [",
-							"//             {auth_token:pm.environment.get('token'),disabled: false, description: {content:\"\", type:\"text/plain\"}},",
-							"//             {curr_code:pm.environment.get('Cur_ID'),disabled: false, description: {content:\"\", type:\"text/plain\"}}",
-							"//         ]",
-							"            ",
-							"        ",
-							"//     }",
-							"// }, function(err,response){",
-							"//     const jsonResponse = response.json();",
-							"// }",
-							"// );"
+							"const options = {",
+							"       'method': 'POST',",
+							"       'url': 'http://116.203.27.46:5002/curr_byn',",
+							"       'body': {",
+							"           'mode': 'formdata',",
+							"           'formdata': [",
+							"               {'key': 'auth_token','value': pm.environment.get('token')},",
+							"               {'key': 'curr_code','value': pm.environment.get('curr_code')}",
+							"           ]",
+							"       }",
+							"}",
+							"pm.sendRequest(options,(error,response) =>{",
+							"    if (response.code == 200){",
+							"        schet++;",
+							"        console.log(response.json());",
+							"    }",
+							"    ",
+							"})",
+							"}",
+							"",
+							"})"
 						],
 						"type": "text/javascript"
 					}
@@ -779,26 +735,16 @@
 							"key": "auth_token",
 							"value": "{{token}}",
 							"type": "text"
-						},
-						{
-							"key": "curr_code",
-							"value": "{{Cur_ID}}",
-							"type": "text"
 						}
-					],
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					]
 				},
 				"url": {
-					"raw": "{{url}}/curr_byn",
+					"raw": "{{url}}/currency",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						"curr_byn"
+						"currency"
 					]
 				}
 			},
