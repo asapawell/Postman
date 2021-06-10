@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "e8e191ef-fab6-42a5-8f9d-a4cc8b1f5dbd",
+		"name": "3,5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "object_info_3",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var schema = {",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"age\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"family\": {",
+							"      \"type\": \"object\",",
+							"      \"properties\": {",
+							"        \"children\": {",
+							"          \"type\": \"array\",",
+							"          \"items\": [",
+							"            {",
+							"              \"type\": \"array\",",
+							"              \"items\": [",
+							"                {",
+							"                  \"type\": \"string\"",
+							"                },",
+							"                {",
+							"                  \"type\": \"integer\"",
+							"                }",
+							"              ]",
+							"            },",
+							"            {",
+							"              \"type\": \"array\",",
+							"              \"items\": [",
+							"                {",
+							"                  \"type\": \"string\"",
+							"                },",
+							"                {",
+							"                  \"type\": \"integer\"",
+							"                }",
+							"              ]",
+							"            }",
+							"          ]",
+							"        },",
+							"        \"pets\": {",
+							"          \"type\": \"object\",",
+							"          \"properties\": {",
+							"            \"cat\": {",
+							"              \"type\": \"object\",",
+							"              \"properties\": {",
+							"                \"age\": {",
+							"                  \"type\": \"integer\"",
+							"                },",
+							"                \"name\": {",
+							"                  \"type\": \"string\"",
+							"                }",
+							"              },",
+							"              \"required\": [",
+							"                \"age\",",
+							"                \"name\"",
+							"              ]",
+							"            },",
+							"            \"dog\": {",
+							"              \"type\": \"object\",",
+							"              \"properties\": {",
+							"                \"age\": {",
+							"                  \"type\": \"integer\"",
+							"                },",
+							"                \"name\": {",
+							"                  \"type\": \"string\"",
+							"                }",
+							"              },",
+							"              \"required\": [",
+							"                \"age\",",
+							"                \"name\"",
+							"              ]",
+							"            }",
+							"          },",
+							"          \"required\": [",
+							"            \"cat\",",
+							"            \"dog\"",
+							"          ]",
+							"        },",
+							"        \"u_salary_1_5_year\": {",
+							"          \"type\": \"integer\"",
+							"        }",
+							"      },",
+							"      \"required\": [",
+							"        \"children\",",
+							"        \"pets\",",
+							"        \"u_salary_1_5_year\"",
+							"      ]",
+							"    },",
+							"    \"name\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"salary\": {",
+							"      \"type\": \"integer\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"age\",",
+							"    \"family\",",
+							"    \"name\",",
+							"    \"salary\"",
+							"  ]",
+							"}",
+							"pm.test('Schema is valid',() =>{",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.expect(tv4.validate(jsonData,schema)).to.be.true;",
+							"})",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Multiplication result is true',function(){",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData.family.u_salary_1_5_year).to.eql(pm.environment.get('salary') * 4);",
+							"    })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/object_info_3?age={{age}}&salary={{salary}}&name={{name}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"object_info_3"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "{{age}}"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info_1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var schema = {",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"age\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"daily_food\": {",
+							"      \"type\": \"number\"",
+							"    },",
+							"    \"daily_sleep\": {",
+							"      \"type\": \"number\"",
+							"    },",
+							"    \"name\": {",
+							"      \"type\": \"string\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"age\",",
+							"    \"daily_food\",",
+							"    \"daily_sleep\",",
+							"    \"name\"",
+							"  ]",
+							"}",
+							"pm.test('Schema is valid',() =>{",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.expect(tv4.validate(jsonData,schema)).to.be.true;",
+							"})",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Multiplication result is true',function(){",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData.daily_food).to.eql(pm.environment.get('weight') * 0.012);",
+							"    pm.expect(jsonData.daily_sleep).to.eql(pm.environment.get('weight') * 2.5);",
+							"    })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						},
+						{
+							"key": "weight",
+							"value": "{{weight}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user_info_1",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info_1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
