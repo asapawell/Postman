@@ -1,0 +1,212 @@
+{
+	"info": {
+		"_postman_id": "45707903-7c49-494f-aefc-53138ac468db",
+		"name": "4,6",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "object_info_4",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var schema = {",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"age\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"name\": {",
+							"      \"type\": \"string\"",
+							"    },",
+							"    \"salary\": {",
+							"      \"type\": \"array\",",
+							"      \"items\": [",
+							"        {",
+							"          \"type\": \"integer\"",
+							"        },",
+							"        {",
+							"          \"type\": \"string\"",
+							"        },",
+							"        {",
+							"          \"type\": \"string\"",
+							"        }",
+							"      ]",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"age\",",
+							"    \"name\",",
+							"    \"salary\"",
+							"  ]",
+							"}",
+							"pm.test('Schema is valid',() =>{",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.expect(tv4.validate(jsonData,schema)).to.be.true;",
+							"})",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Multiplication result is true',function(){",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData.salary[1]).to.eql(pm.environment.get('salary') * 2);",
+							"    pm.expect(jsonData.salary[2]).to.eql(pm.environment.get('salary') * 3);",
+							"    })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/object_info_4?age={{age}}&name={{name}}&salary={{salary}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"object_info_4"
+					],
+					"query": [
+						{
+							"key": "age",
+							"value": "{{age}}"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user_info_2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var schema = {",
+							"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",",
+							"  \"type\": \"object\",",
+							"  \"properties\": {",
+							"    \"person\": {",
+							"      \"type\": \"object\",",
+							"      \"properties\": {",
+							"        \"u_age\": {",
+							"          \"type\": \"integer\"",
+							"        },",
+							"        \"u_name\": {",
+							"          \"type\": \"array\",",
+							"          \"items\": [",
+							"            {",
+							"              \"type\": \"string\"",
+							"            },",
+							"            {",
+							"              \"type\": \"integer\"",
+							"            },",
+							"            {",
+							"              \"type\": \"integer\"",
+							"            }",
+							"          ]",
+							"        },",
+							"        \"u_salary_5_years\": {",
+							"          \"type\": \"number\"",
+							"        }",
+							"      },",
+							"      \"required\": [",
+							"        \"u_age\",",
+							"        \"u_name\",",
+							"        \"u_salary_5_years\"",
+							"      ]",
+							"    },",
+							"    \"qa_salary_after_1.5_year\": {",
+							"      \"type\": \"number\"",
+							"    },",
+							"    \"qa_salary_after_12_months\": {",
+							"      \"type\": \"number\"",
+							"    },",
+							"    \"qa_salary_after_3.5_years\": {",
+							"      \"type\": \"number\"",
+							"    },",
+							"    \"qa_salary_after_6_months\": {",
+							"      \"type\": \"integer\"",
+							"    },",
+							"    \"start_qa_salary\": {",
+							"      \"type\": \"integer\"",
+							"    }",
+							"  },",
+							"  \"required\": [",
+							"    \"person\",",
+							"    \"qa_salary_after_1.5_year\",",
+							"    \"qa_salary_after_12_months\",",
+							"    \"qa_salary_after_3.5_years\",",
+							"    \"qa_salary_after_6_months\",",
+							"    \"start_qa_salary\"",
+							"  ]",
+							"}",
+							"pm.test('Schema is valid',() =>{",
+							"    let jsonData = JSON.parse(responseBody);",
+							"    pm.expect(tv4.validate(jsonData,schema)).to.be.true;",
+							"})",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test('Multiplication result is true',function(){",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData.qa_salary_after_6_months).to.eql(pm.environment.get('salary') * 2);",
+							"    pm.expect(jsonData.qa_salary_after_12_months).to.eql(pm.environment.get('salary') * 2.7);",
+							"    pm.expect(jsonData.person.u_salary_5_years).to.eql(pm.environment.get('salary') * 4.2);",
+							"    })"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "age",
+							"value": "{{age}}",
+							"type": "text"
+						},
+						{
+							"key": "salary",
+							"value": "{{salary}}",
+							"type": "text"
+						},
+						{
+							"key": "name",
+							"value": "{{name}}",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{url}}/user_info_2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"user_info_2"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
