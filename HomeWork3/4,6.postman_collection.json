@@ -52,8 +52,8 @@
 							"});",
 							"pm.test('Multiplication result is true',function(){",
 							"    let jsonData = pm.response.json();",
-							"    pm.expect(jsonData.salary[1]).to.eql(pm.environment.get('salary') * 2);",
-							"    pm.expect(jsonData.salary[2]).to.eql(pm.environment.get('salary') * 3);",
+							"    pm.expect(parseInt(jsonData.salary[1])).to.eql(pm.environment.get('salary') * 2);",
+							"    pm.expect(parseInt(jsonData.salary[2])).to.eql(pm.environment.get('salary') * 3);",
 							"    })"
 						],
 						"type": "text/javascript"
@@ -164,9 +164,11 @@
 							"});",
 							"pm.test('Multiplication result is true',function(){",
 							"    let jsonData = pm.response.json();",
+							"    pm.expect(jsonData['qa_salary_after_1.5_year']).to.eql(pm.environment.get('salary')* 3.3);",
 							"    pm.expect(jsonData.qa_salary_after_6_months).to.eql(pm.environment.get('salary') * 2);",
 							"    pm.expect(jsonData.qa_salary_after_12_months).to.eql(pm.environment.get('salary') * 2.7);",
 							"    pm.expect(jsonData.person.u_salary_5_years).to.eql(pm.environment.get('salary') * 4.2);",
+							"    pm.expect(jsonData['qa_salary_after_3.5_years']).to.eql(pm.environment.get('salary')* 3.8);",
 							"    })"
 						],
 						"type": "text/javascript"
